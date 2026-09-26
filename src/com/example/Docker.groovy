@@ -19,11 +19,16 @@ class Docker implements Serializable {
         script.withCredentials([
                 script.usernamePassword(
                         credentialsId: 'docker-hub-repo-asambataiden',
-                        passwordVariable: 'DOCKERHUB_PASSWORD',
-                        usernameVariable: 'DOCKERHUB_USERNAME'
+                        usernameVariable: 'DOCKERHUB_USERNAME',
+                        passwordVariable: 'DOCKERHUB_PASSWORD'
                 )
         ]) {
-            script.sh "echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin"
+            script.sh '''
+                echo "$DOCKERHUB_PASSWORD" | \
+                docker login \
+                  --username "$DOCKERHUB_USERNAME" \
+                  --password-stdin
+            '''
         }
     }
 
