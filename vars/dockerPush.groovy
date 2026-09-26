@@ -1,7 +1,8 @@
-#!/user/bin/env groovy
-
-import com.example.Docker
+import com.example.DockerService
 
 def call(String imageName) {
-    return new Docker(this).dockerPush(imageName)
+    def docker = new DockerService(this)
+
+    docker.dockerLogin()
+    docker.dockerPush(imageName)
 }
